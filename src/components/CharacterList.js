@@ -1,16 +1,45 @@
 import React, { useEffect, useState } from "react";
+import axios from 'axios';
+import SearchForm from "./SearchForm";
+import CharacterCard from "./CharacterCard";
+import { Row, Col } from 'reactstrap';
 
 export default function CharacterList() {
-  // TODO: Add useState to track data from useEffect
+
+  const [data, setData] = useState([]);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
-    // TODO: Add API Request here - must run in `useEffect`
-    //  Important: verify the 2nd `useEffect` parameter: the dependancies array!
-  }, []);
+    axios
+      .get("https://cors-anywhere.herokuapp.com/https://rickandmortyapi.com/api/character/")
+      .then(response => {
+        console.log(response);
+        const characters = response.data.results.filter(character =>
+          character.name.toLowerCase().includes(query.toLowerCase())
+        );
+        setData(characters);
+      })
+      .catch(errors => {
+        console.log(errors)
+      })
+  }, [query]);
 
   return (
-    <section className="character-list">
-      <h2>TODO: `array.map()` over your state here!</h2>
+    <section className="character-list"> 
+    <SearchForm data={data} query={query} setQuery={setQuery} />
+    <div>
+      <Row>
+        
+        {data.map(data => {
+          return (
+            <Col xs='4'>
+            <CharacterCard data={data} />
+            </Col>
+          );
+        })}
+      </Row>
+    </div>
+  
     </section>
   );
 }

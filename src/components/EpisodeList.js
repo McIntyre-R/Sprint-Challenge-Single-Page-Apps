@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import SearchForm from "./SearchForm";
-import LocationCard from "./LocationCard";
+import EpisodeCard from "./EpisodeCard";
 import { Row, Col } from 'reactstrap';
 
-export default function LocationsList() {
+export default function EpisodeList() {
 
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
 
   useEffect(() => {
     axios
-      .get("https://cors-anywhere.herokuapp.com/https://rickandmortyapi.com/api/location/")
+      .get("https://cors-anywhere.herokuapp.com/https://rickandmortyapi.com/api/episode/")
       .then(response => {
         console.log(response);
-        const locations = response.data.results.filter(location =>
-          location.name.toLowerCase().includes(query.toLowerCase())
+        const episodes = response.data.results.filter(episode =>
+          episode.name.toLowerCase().includes(query.toLowerCase())
         );
-        setData(locations);
+        setData(episodes);
       })
       .catch(errors => {
         console.log(errors)
@@ -33,7 +33,7 @@ export default function LocationsList() {
         {data.map(data => {
           return (
             <Col xs='4'>
-            <LocationCard data={data} />
+            <EpisodeCard data={data} />
             </Col>
           );
         })}
