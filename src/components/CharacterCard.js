@@ -12,7 +12,9 @@ export default function CharacterCard(props) {
         <CardBody>
           <CardTitle>Species: {props.data.species}</CardTitle>
           <CardText>
-          Gender: {props.data.gender}
+          Gender: {props.data.gender} 
+          </CardText>
+          <CardText>
           Origin: {props.data.origin.name}
           </CardText> 
         </CardBody>
